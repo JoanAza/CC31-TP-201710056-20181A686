@@ -1,17 +1,16 @@
-#pragma once
-#include <iostream>
-using namespace std;
+#ifndef __CCOLA_H__
+#define __CCOLA_H__
+#include "CPaciente.h"
 
-
-template<typename T>
-class Cola
+//template <typename T>
+class CCola
 {
 	struct Node
 	{
-		T elem;
+		CPaciente elem;
 		Node* next;
 
-		Node(T elem) : elem(elem), next(nullptr) {}
+		Node(CPaciente elem, Node* n = nullptr) : elem(elem), next(n) {}
 	};
 
 	Node* ini;
@@ -19,43 +18,56 @@ class Cola
 	int len;
 
 public:
-	Cola() : len(0), ini(nullptr), fin(fin) {}
-	~Cola() {	}
-
-	void Push(T elem) {
-		Node* nuevoNode = new Node(elem);
-		nuevoNode->next = nullptr;
-		if (Is_Empty()) {
-			ini = nuevoNode;
-			fin = nuevoNode;
-		}
-		else {
-			fin->next = nuevoNode;
-			fin = nuevoNode;
-		}
-	}
-	void Pop()
+	CCola() : len(0), ini(nullptr), fin(nullptr) {}
+	~CCola()
 	{
-		if (Is_Empty()) {
-			return;
-		}
-		else {
-			Node* borrar = ini;
-			if (ini == fin) {
-				ini = nullptr;
-				fin = nullptr;
-			}
-			else
-			{
-				ini = ini->next;
-				delete borrar;
-			}
+		while (fin != nullptr)
+		{
+			auto aux = ini;
+			ini = aux->next;
+			delete aux;
 		}
 	}
-	bool Is_Empty(Node* ini)
+
+	bool is_empty()
 	{
-		return (ini == NULL) ? true : false;
-
+		return len == 0;
 	}
 
+	void Push(CPaciente elem)
+	{
+		if (++len == 1)
+		{
+			ini = new Node(elem);
+			fin = ini;
+		}
+		else
+		{
+			fin->next = new Node(elem);
+			fin = fin->next;
+		}
+	}
+
+	bool Pop()
+	{
+		if (len > 0)
+		{
+			auto aux = ini;
+			ini = aux->next;
+			delete aux;
+			--len;
+			return true;
+		}
+		return false;
+	}
+
+	CPaciente Front()
+	{
+		if (len > 0)
+		{
+			return ini->elem;
+		}
+	}
 };
+
+#endif

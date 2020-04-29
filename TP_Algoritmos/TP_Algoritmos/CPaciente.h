@@ -1,3 +1,4 @@
+#pragma once
 #ifndef __CPACIENTE_H__
 #define __CPACIENTE_H__
 
@@ -7,9 +8,6 @@
 #include <string>
 
 using namespace std;
-
-
-
 
 class CPaciente
 {
@@ -22,16 +20,16 @@ class CPaciente
 
 public:
 
-	CPaciente(string nombre, int edad, string genero, string estado, int aislamiento)
-		: nombre(nombre), edad(edad), genero(genero), estado(estado), aislamiento(aislamiento) {}
+	CPaciente(string nombre, int edad, string genero)
+		: nombre(nombre), edad(edad), genero(genero) {}
 
-	string getNombre() { return this->nombre; }
-	int getEdad() { return this->edad; }
-	int getAislamiento() { return this->aislamiento; }
-	string getGenero() { return this->genero; }
-	string getEstado() { return this->estado; }
+	string getNombre() { return nombre; }
+	int getEdad() { return edad; }
+	int getAislamiento() { return aislamiento; }
+	string getGenero() { return genero; }
+	string getEstado() { return estado; }
 
-
+	void setEstado(string estado) { this->estado = estado; }
 	int setAislamiento(int _aislamiento) { this->aislamiento = _aislamiento;  return aislamiento; }
 
 
@@ -43,9 +41,7 @@ public:
 			"\n Genero:				" + getGenero() +
 			"\n Estado:				" + getEstado() +
 			"\n Tiempo Aislamiento: " + to_string(this->aislamiento);
-
 	}
-
 };
 
 
@@ -64,5 +60,4 @@ public:
 
 
 
-
-#endif // !__CPACIENTE_H__
+#endif

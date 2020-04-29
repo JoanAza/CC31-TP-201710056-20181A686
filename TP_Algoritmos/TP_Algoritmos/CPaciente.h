@@ -16,31 +16,33 @@ class CPaciente
 	string genero;
 	string estado;
 	int aislamiento;
+	string enfermedad;
 
 
 public:
 
-	CPaciente(string nombre, int edad, string genero)
-		: nombre(nombre), edad(edad), genero(genero) {}
+	CPaciente(string nombre, int edad, string genero, string estado, string enfermedad)
+		: nombre(nombre), edad(edad), genero(genero), estado(estado), enfermedad(enfermedad) {}
 
 	string getNombre() { return nombre; }
 	int getEdad() { return edad; }
 	int getAislamiento() { return aislamiento; }
 	string getGenero() { return genero; }
 	string getEstado() { return estado; }
+	string getEnfermedad() { return enfermedad; }
 
-	void setEstado(string estado) { this->estado = estado; }
 	int setAislamiento(int _aislamiento) { this->aislamiento = _aislamiento;  return aislamiento; }
 
 
 
 	string toString()
 	{
-		return this->nombre +
-			"\n Edad:				" + to_string(this->edad) +
-			"\n Genero:				" + getGenero() +
-			"\n Estado:				" + getEstado() +
-			"\n Tiempo Aislamiento: " + to_string(this->aislamiento);
+		return "\n\n Nombre:                         " + getNombre() +
+			   "\n Edad:                           " + to_string(this->edad) +
+			   "\n Genero:                         " + getGenero() +
+			   "\n Estado:                         " + getEstado() +
+			   "\n Enfermedad pre-existente:       " + getEnfermedad() +
+			   "\n Tiempo Aislamiento:             " + to_string(this->aislamiento);
 	}
 };
 

@@ -5,39 +5,36 @@
 
 #define AGREGAR 1
 #define MOSTRAR 2
-#define OBTENER 3
+#define LISTAR 3
 #define SALIR 4
 
 int opcion;
+int status;
 string nombre;
 string genero;
-string estado;
-
+string enfermedad;
 int edad;
-int aislamiento;
-int status;
 
 //template<typename T>
 CCola* queue = new CCola();
 
-bool Set_status()
+auto Generar_estado = []()
 {
-	status = rand() % (1 - 0 + 1) + 0;
-
-	if (status == 1)
+	string sta1 = "Positivo";
+	string sta2 = "Negativo";
+	status = rand() % 10;
+	if (status % 2 == 0)
 	{
-		return true;
+		return sta1;
 	}
 	else
 	{
-		return false;
+		return sta2;
 	}
-}
+};
 
 void Add_Paciente()
 {
-	string sta1 = "positivo";
-	string sta2 = "negativo";
 	cout << endl << " INGRESE LA INFORMACION DEL PACIENTE" << endl << endl;
 	cout << " Ingrese el nombre del paciente: ";
 	cin >> nombre;
@@ -45,29 +42,26 @@ void Add_Paciente()
 	cin >> edad;
 	cout << " Ingrese el genero del paciente: ";
 	cin >> genero;
+	cout << " Enfermedad pre-existente: ";
+	cin >> enfermedad;
 
-	CPaciente patient = CPaciente(nombre, edad, genero);
+	CPaciente patient = CPaciente(nombre, edad, genero, Generar_estado(), enfermedad);
 	queue->Push(patient);
-	if (Set_status())
-	{
-		patient.setEstado(sta1);
-	}
-	else
-	{
-		patient.setEstado(sta2);
-	}
-
+	
 	cout << " Paciente agregado correctamente!!!" << endl << endl;
 }
 
-void Show_cola()
+void Show_pacientes()
 {
 	int cont = 1;
-	CPaciente aux = CPaciente(nombre, edad, genero);
+	CPaciente aux = CPaciente(nombre, edad, genero, Generar_estado(), enfermedad);
 	while (!queue->is_empty())
 	{
 		aux = queue->Front();
-		cout << " " << cont << ". " << aux.getNombre() << endl;
+		if (aux.getEstado() == "Positivo")
+		{
+			cout << " Paciente N " << cont << ". " << aux.toString() << endl << endl << endl;
+		}
 		queue->Pop();
 		cont++;
 	}
@@ -75,16 +69,16 @@ void Show_cola()
 
 void Menu()
 {
-	cout << " * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *" << endl;
-	cout << " *                                                                               *" << endl;
-	cout << " *                                    MENU                                       *" << endl;
-	cout << " *                                                                               *" << endl;
-	cout << " *   1. Agregar nuevo paciente a la cola de espera                               *" << endl;
-	cout << " *   2. Mostrar a los pacientes que se encuentran en la cola de espera           *" << endl;
-	cout << " *   3. Obtener informacion de los pacientes que dieron positivo para COVID-19   *" << endl;
-	cout << " *   4. SALIR                                                                    *" << endl;
-	cout << " *                                                                               *" << endl;
-	cout << " * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *" << endl << endl;
+	cout << " * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *" << endl;
+	cout << " *                                                                   *" << endl;
+	cout << " *                                    MENU                           *" << endl;
+	cout << " *                                                                   *" << endl;
+	cout << " *   1. Agregar nuevo paciente a la cola de espera                   *" << endl;
+	cout << " *   2. Mostrar a los pacientes que dieron positivo para COVID-19    *" << endl;
+	cout << " *   3. Listar a los pacientes por grupo de riesgo                   *" << endl;
+	cout << " *   4. SALIR                                                        *" << endl;
+	cout << " *                                                                   *" << endl;
+	cout << " * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *" << endl << endl;
 	cout << " Ingrese una opcion: ";
 	cin >> opcion;
 	system("cls");
@@ -114,8 +108,7 @@ int main()
 
 		case MOSTRAR:
 
-			Show_cola();
-
+			Show_pacientes();
 			break;
 		}
 		Menu();

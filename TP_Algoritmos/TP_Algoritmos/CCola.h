@@ -2,6 +2,7 @@
 #define __CCOLA_H__
 #include "CPaciente.h"
 
+
 //template <typename T>
 class CCola
 {
@@ -61,6 +62,8 @@ public:
 		return false;
 	}
 
+	int Size() { return len; }
+
 	CPaciente Front()
 	{
 		if (len > 0)
@@ -68,6 +71,54 @@ public:
 			return ini->elem;
 		}
 	}
+
+	void Guardar()
+	{
+		Node* aux = ini;
+		ofstream archivo;
+
+		archivo.open("archivo.csv");
+		for (int i = 0; i < len; i++)
+		{
+			archivo << aux->elem.getNombre()		<< "," << aux->elem.getApellido()	<< "," << aux->elem.getGenero() << ","
+					<< aux->elem.getEdad()			<< "," << aux->elem.getEnfermedad() << "," << aux->elem.getEstado() << "," 
+					<< aux->elem.getAislamiento()	<< endl;
+			aux = aux->next;
+		}
+		archivo.close();
+	}
+
+	void Cargar(string _nombre)
+	{
+		ifstream archivo;
+		archivo.open(_nombre);
+		string nombre, apellido, genero,estado, enfermedad, edad, aislamiento;
+	
+		if (archivo.is_open()) {
+			
+			getline(archivo,nombre ,',' );
+			getline(archivo, apellido,',' );
+			getline(archivo, genero,',' );
+			getline(archivo, edad,',' );
+			getline(archivo, enfermedad,',' );
+			getline(archivo, estado,',' );
+			// falta 
+			getline(archivo, aislamiento,',' );
+
+			if (nombre != "") {
+			/*	 CPaciente* nuevo = new CPaciente(nombre, apellido, stof(edad), genero, estado, enfermedad);
+				 Node* aux = new Node(nuevo,ini->next);*/
+				
+
+			}
+
+		}
+		else
+			cout << "ERROR, FILES NOT FOUND" << endl;
+
+
+	}
+
 };
 
 #endif

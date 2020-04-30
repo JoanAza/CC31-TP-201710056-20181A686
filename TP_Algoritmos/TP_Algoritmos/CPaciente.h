@@ -6,6 +6,10 @@
 #include <functional>
 #include <vector>
 #include <string>
+#include <fstream>
+#include <cstring>
+#include <sstream>
+
 
 using namespace std;
 
@@ -22,8 +26,8 @@ class CPaciente
 
 public:
 	CPaciente(){}
-	CPaciente(string nombre, int edad, string genero, string estado, string enfermedad, string p_apellido)
-		: nombre(nombre), edad(edad), genero(genero), estado(estado), enfermedad(enfermedad), p_apellido(p_apellido) {}
+	CPaciente(string nombre, string p_apellido, int edad, string genero, string estado, string enfermedad)
+		: nombre(nombre), p_apellido(p_apellido), edad(edad), genero(genero), estado(estado), enfermedad(enfermedad) {}
 
 	string getNombre() { return nombre; }
 	string getApellido() { return p_apellido; }

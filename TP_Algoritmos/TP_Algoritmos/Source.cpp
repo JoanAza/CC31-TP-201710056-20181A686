@@ -7,7 +7,9 @@
 #define AGREGAR 1
 #define MOSTRAR 2
 #define LISTAR 3
-#define SALIR 4
+#define GUARDAR 4
+#define CARGAR 5
+#define SALIR 6
 
 int opcion;
 int status;
@@ -66,7 +68,7 @@ void Add_Paciente()
 		enfermedad[i] = toupper(enfermedad[i]);
 	}
 
-	CPaciente patient = CPaciente(nombre, edad, genero, Generar_estado(), enfermedad, apellido);
+	CPaciente patient = CPaciente(nombre, apellido, edad, genero, Generar_estado(), enfermedad);
 	queue->Push(patient);
 	
 	cout << " Paciente agregado correctamente!!!" << endl << endl;
@@ -75,7 +77,7 @@ void Add_Paciente()
 void Show_pacientes()
 {
 	int cont = 1;
-	CPaciente aux = CPaciente(nombre, edad, genero, Generar_estado(), enfermedad, apellido);
+	CPaciente aux = CPaciente(nombre, apellido, edad, genero, Generar_estado(), enfermedad);
 	while (!queue->is_empty())
 	{
 		aux = queue->Front();
@@ -109,7 +111,9 @@ void Menu()
 	cout << " *   1. Agregar nuevo paciente a la cola de espera                   *" << endl;
 	cout << " *   2. Mostrar a los pacientes que dieron positivo para COVID-19    *" << endl;
 	cout << " *   3. Listar a los pacientes por grupo de riesgo                   *" << endl;
-	cout << " *   4. SALIR                                                        *" << endl;
+	cout << " *   4. Guarda Informacion							                  *" << endl;
+	cout << " *   5. Cargar Informacion							                  *" << endl;
+	cout << " *   5. SALIR                                                        *" << endl;
 	cout << " *                                                                   *" << endl;
 	cout << " * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *" << endl << endl;
 	cout << " Ingrese una opcion: ";
@@ -122,7 +126,7 @@ int main()
 {
 	Menu();
 
-	while (opcion != 4)
+	while (opcion != 5)
 	{
 		switch (opcion)
 		{
@@ -145,10 +149,10 @@ int main()
 			break;
 		
 		case LISTAR:
-			int op;
+			int opc;
 			cout << "Presione 1 para mostrar al grupo de mayor riesgo o 0 para mostrar al grupo de menor riesgo: ";
-			cin >> op;
-			if (op == 1)
+			cin >> opc;
+			if (opc == 1)
 			{
 				Show_mayorriesgo();
 			}
@@ -156,6 +160,17 @@ int main()
 			{
 				Show_menorriesgo();
 			}
+			break;
+
+		case GUARDAR:
+			queue->Guardar();
+			break;
+
+		case CARGAR:
+			string nombre;
+			cout << "Nombre del archivo '.cs'  :\n";
+			cin >> nombre;
+			queue->Cargar(nombre);
 			break;
 		}
 		Menu();

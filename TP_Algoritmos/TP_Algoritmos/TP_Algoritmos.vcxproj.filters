@@ -26,5 +26,8 @@
     <ClInclude Include="CCola.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CLista.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

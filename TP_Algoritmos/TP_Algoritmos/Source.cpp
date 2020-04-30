@@ -2,6 +2,7 @@
 #include <functional>
 #include <stdlib.h>
 #include "CCola.h"
+#include "CLista.h"
 
 #define AGREGAR 1
 #define MOSTRAR 2
@@ -10,13 +11,14 @@
 
 int opcion;
 int status;
+int edad;
 string nombre;
 string genero;
 string enfermedad;
-int edad;
-
-//template<typename T>
+string apellido;
 CCola* queue = new CCola();
+CLista* mayorRiesgo = new CLista();
+CLista* menorRiesgo = new CLista();
 
 auto Generar_estado = []()
 {
@@ -33,19 +35,38 @@ auto Generar_estado = []()
 	}
 };
 
+
+void Show_mayorriesgo()
+{
+	cout << "Pacientes en riesgo alto" << endl;
+	mayorRiesgo->Mostrar();
+}
+
+void Show_menorriesgo()
+{
+	cout << "Pacientes en riesgo bajo" << endl;
+	menorRiesgo->Mostrar();
+}
+
 void Add_Paciente()
 {
 	cout << endl << " INGRESE LA INFORMACION DEL PACIENTE" << endl << endl;
 	cout << " Ingrese el nombre del paciente: ";
 	cin >> nombre;
+	cout << " Ingrese el primer apellido del paciente: ";
+	cin >> apellido;
 	cout << " Ingrese la edad del paciente: ";
 	cin >> edad;
 	cout << " Ingrese el genero del paciente: ";
 	cin >> genero;
-	cout << " Enfermedad pre-existente: ";
+	cout << " Enfermedad pre-existente ? (SI o NO): ";
 	cin >> enfermedad;
+	for (int i = 0; i < enfermedad.length(); i++)
+	{
+		enfermedad[i] = toupper(enfermedad[i]);
+	}
 
-	CPaciente patient = CPaciente(nombre, edad, genero, Generar_estado(), enfermedad);
+	CPaciente patient = CPaciente(nombre, edad, genero, Generar_estado(), enfermedad, apellido);
 	queue->Push(patient);
 	
 	cout << " Paciente agregado correctamente!!!" << endl << endl;
@@ -54,13 +75,25 @@ void Add_Paciente()
 void Show_pacientes()
 {
 	int cont = 1;
-	CPaciente aux = CPaciente(nombre, edad, genero, Generar_estado(), enfermedad);
+	CPaciente aux = CPaciente(nombre, edad, genero, Generar_estado(), enfermedad, apellido);
 	while (!queue->is_empty())
 	{
 		aux = queue->Front();
 		if (aux.getEstado() == "Positivo")
 		{
-			cout << " Paciente N " << cont << ". " << aux.toString() << endl << endl << endl;
+			cout << " Paciente N " << cont << ". " << aux.Mostrar_Informacion() << endl << endl << endl;
+			if (aux.getEdad() >= 50)
+			{
+				mayorRiesgo->Agregar(aux);
+			}
+			else if (aux.getEdad() < 50 && aux.getEnfermedad() == "SI")
+			{
+				mayorRiesgo->Agregar(aux);
+			}
+			else
+			{
+				menorRiesgo->Agregar(aux);
+			}
 		}
 		queue->Pop();
 		cont++;
@@ -99,7 +132,7 @@ int main()
 			{
 				Add_Paciente();
 
-				cout << " Desea agregar otro paciente ? S para SI : N para NO" << endl;
+				cout << " Desea agregar otro paciente ? (S para SI : N para NO)" << endl;
 				cin >> op;
 				op = toupper(op);
 				system("cls");
@@ -109,6 +142,20 @@ int main()
 		case MOSTRAR:
 
 			Show_pacientes();
+			break;
+		
+		case LISTAR:
+			int op;
+			cout << "Presione 1 para mostrar al grupo de mayor riesgo o 0 para mostrar al grupo de menor riesgo: ";
+			cin >> op;
+			if (op == 1)
+			{
+				Show_mayorriesgo();
+			}
+			else
+			{
+				Show_menorriesgo();
+			}
 			break;
 		}
 		Menu();

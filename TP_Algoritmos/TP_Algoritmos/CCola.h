@@ -72,21 +72,6 @@ public:
 		}
 	}
 
-	void Guardar()
-	{
-		Node* aux = ini;
-		ofstream archivo;
-
-		archivo.open("archivo.csv");
-		for (int i = 0; i < len; i++)
-		{
-			archivo << aux->elem.getNombre()		<< "," << aux->elem.getApellido()	<< "," << aux->elem.getGenero() << ","
-					<< aux->elem.getEdad()			<< "," << aux->elem.getEnfermedad() << "," << aux->elem.getEstado() << "," 
-					<< aux->elem.getAislamiento()	<< endl;
-			aux = aux->next;
-		}
-		archivo.close();
-	}
 	// en prueba
 
 	//void Cargar(string _nombre)

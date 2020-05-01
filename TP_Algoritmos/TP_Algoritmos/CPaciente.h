@@ -4,12 +4,10 @@
 
 #include <iostream>
 #include <functional>
-#include <vector>
 #include <string>
 #include <fstream>
 #include <cstring>
 #include <sstream>
-
 
 using namespace std;
 
@@ -52,21 +50,4 @@ public:
 			   "\n Tiempo Aislamiento:             " + to_string(this->aislamiento);
 	}
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #endif

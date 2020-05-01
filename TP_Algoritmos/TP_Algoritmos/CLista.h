@@ -52,7 +52,7 @@ public:
 	T Buscar(CPaciente elem)
 	{
 		CPaciente help = CPaciente();
-		Node* aux = ini;
+		auto aux = ini;
 		while (aux != nullptr)
 		{
 			help = aux->elem;
@@ -65,12 +65,10 @@ public:
 		return NADA;
 	}
 
-	
-
 	CPaciente Mostrar()
 	{
 		CPaciente help = CPaciente();
-		Node* aux = ini;
+		auto aux = ini;
 		help = aux->elem;
 		cout << help.Mostrar_Informacion() << endl;
 		for (int i = 0; i < len; i++)
@@ -84,6 +82,22 @@ public:
 			}
 		}
 		return aux->elem;
+	}
+
+	void Guardar()
+	{
+		auto aux = ini;
+		ofstream archivo;
+
+		archivo.open("archivo.csv");
+		for (int i = 0; i < len; i++)
+		{
+			archivo << aux->elem.getNombre() << ", " << aux->elem.getApellido() << ", " << aux->elem.getGenero() << ", "
+				    << aux->elem.getEdad() << ", " << aux->elem.getEnfermedad() << ", " << aux->elem.getEstado() << ", "
+				    << aux->elem.getAislamiento() << endl;
+			aux = aux->next;
+		}
+		archivo.close();
 	}
 };
 #endif

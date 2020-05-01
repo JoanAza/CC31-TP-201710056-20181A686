@@ -1,5 +1,3 @@
-#include <iostream>
-#include <functional>
 #include <stdlib.h>
 #include "CCola.h"
 #include "CLista.h"
@@ -53,13 +51,13 @@ void Show_menorriesgo()
 void Add_Paciente()
 {
 	cout << endl << " INGRESE LA INFORMACION DEL PACIENTE" << endl << endl;
-	cout << " Ingrese el nombre del paciente: ";
+	cout << " Ingrese el NOMBRE del paciente: ";
 	cin >> nombre;
-	cout << " Ingrese el primer apellido del paciente: ";
+	cout << " Ingrese el primer APELLIDO del paciente: ";
 	cin >> apellido;
-	cout << " Ingrese la edad del paciente: ";
+	cout << " Ingrese la EDAD del paciente: ";
 	cin >> edad;
-	cout << " Ingrese el genero del paciente: ";
+	cout << " Ingrese el GENERO del paciente: ";
 	cin >> genero;
 	cout << " Enfermedad pre-existente ? (SI o NO): ";
 	cin >> enfermedad;
@@ -111,8 +109,8 @@ void Menu()
 	cout << " *   1. Agregar nuevo paciente a la cola de espera                   *" << endl;
 	cout << " *   2. Mostrar a los pacientes que dieron positivo para COVID-19    *" << endl;
 	cout << " *   3. Listar a los pacientes por grupo de riesgo                   *" << endl;
-	cout << " *   4. Guarda Informacion							                  *" << endl;
-	cout << " *   5. Cargar Informacion							                  *" << endl;
+	cout << " *   4. Guardar Informacion                                          *" << endl;
+	cout << " *   5. Cargar Informacion                                           *" << endl;
 	cout << " *   6. SALIR                                                        *" << endl;
 	cout << " *                                                                   *" << endl;
 	cout << " * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *" << endl << endl;
@@ -120,7 +118,6 @@ void Menu()
 	cin >> opcion;
 	system("cls");
 }
-
 
 int main()
 {
@@ -150,20 +147,36 @@ int main()
 		
 		case LISTAR:
 			int opc;
-			cout << "Presione 1 para mostrar al grupo de mayor riesgo o 0 para mostrar al grupo de menor riesgo: ";
+			cout << "Presione 1 para mostrar al GRUPO DE MAYOR RIESGO o 0 para mostrar al GRUPO DE MENOR RIESGO: ";
 			cin >> opc;
 			if (opc == 1)
-			{
-				Show_mayorriesgo();
+			{	
+				if (mayorRiesgo->is_empty())
+				{
+					cout << "No existen pacientes con riesgo alto";
+				}
+				else
+				{
+					Show_mayorriesgo();
+				}
 			}
 			else
 			{
-				Show_menorriesgo();
+				
+				if (menorRiesgo->is_empty())
+				{
+					cout << "No existen pacientes con riesgo bajo";
+				}
+				else
+				{
+					Show_menorriesgo();
+				}
 			}
 			break;
 
 		case GUARDAR:
-			queue->Guardar();
+			mayorRiesgo->Guardar();
+			menorRiesgo->Guardar();
 			break;
 
 		case CARGAR:
@@ -175,7 +188,6 @@ int main()
 		}
 		Menu();
 	}
-
 	system("pause");
 	return 0;
 }

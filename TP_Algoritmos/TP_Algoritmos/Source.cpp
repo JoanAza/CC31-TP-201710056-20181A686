@@ -113,7 +113,7 @@ void Menu()
 	cout << " *   3. Listar a los pacientes por grupo de riesgo                   *" << endl;
 	cout << " *   4. Guarda Informacion							                  *" << endl;
 	cout << " *   5. Cargar Informacion							                  *" << endl;
-	cout << " *   5. SALIR                                                        *" << endl;
+	cout << " *   6. SALIR                                                        *" << endl;
 	cout << " *                                                                   *" << endl;
 	cout << " * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *" << endl << endl;
 	cout << " Ingrese una opcion: ";
@@ -126,7 +126,7 @@ int main()
 {
 	Menu();
 
-	while (opcion != 5)
+	while (opcion != 6)
 	{
 		switch (opcion)
 		{
@@ -167,10 +167,10 @@ int main()
 			break;
 
 		case CARGAR:
-			string nombre;
+			/*string nombre;
 			cout << "Nombre del archivo '.cs'  :\n";
 			cin >> nombre;
-			queue->Cargar(nombre);
+			queue->Cargar(nombre);*/
 			break;
 		}
 		Menu();

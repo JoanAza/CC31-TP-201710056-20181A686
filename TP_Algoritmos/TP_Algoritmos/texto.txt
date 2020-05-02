@@ -1,0 +1,2 @@
+nombre4, p4, p4, 53, N, Positivo, -858993460,
+nombre3, p3, p3, 45, S, Positivo, -858993460,

@@ -72,39 +72,6 @@ public:
 		}
 	}
 
-	// en prueba
-
-	//void Cargar(string _nombre)
-	//{
-	//	ifstream archivo;
-	//	
-	//	CCola aux2;
-	//	archivo.open(_nombre);
-	//	string nombre, apellido, genero,estado, enfermedad, edad, aislamiento;
-	//
-	//	if (archivo.is_open()) {
-	//		
-	//		getline(archivo,nombre ,',' );
-	//		getline(archivo, apellido,',' );
-	//		getline(archivo, genero,',' );
-	//		getline(archivo, edad,',' );
-	//		getline(archivo, enfermedad,',' );
-	//		getline(archivo, estado,',' );
-	//		// falta 
-	//		getline(archivo, aislamiento,',' );
-	//		CPaciente* paciente = new CPaciente(nombre,apellido,stoi(edad),genero,estado,enfermedad);
-	//	
-	//		if (nombre == "")
-	//		{
-	//	
-	//			aux2.Push(*paciente);
-	//		}
-	//	}
-	//	else
-	//		cout << "ERROR, FILES NOT FOUND" << endl;
-
-
-	//}
 
 };
 

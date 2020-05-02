@@ -86,18 +86,51 @@ public:
 
 	void Guardar()
 	{
-		auto aux = ini;
+	
+		Node* aux = ini;
 		ofstream archivo;
 
-		archivo.open("archivo.csv");
-		for (int i = 0; i < len; i++)
+		archivo.open("archivo.txt");
+		for(int i = 0; i < len ; ++i)
 		{
-			archivo << aux->elem.getNombre() << ", " << aux->elem.getApellido() << ", " << aux->elem.getGenero() << ", "
-				    << aux->elem.getEdad() << ", " << aux->elem.getEnfermedad() << ", " << aux->elem.getEstado() << ", "
-				    << aux->elem.getAislamiento() << endl;
+			archivo << aux->elem.getNombre() << "," << aux->elem.getApellido() << "," << aux->elem.getGenero() << ","
+				<< aux->elem.getEdad() << "," << aux->elem.getEnfermedad() << "," << aux->elem.getEstado() << ","
+				<< aux->elem.getAislamiento();
+			archivo << endl;
 			aux = aux->next;
 		}
 		archivo.close();
 	}
+
+	// en prueba
+
+	vector<CPaciente> Cargar(string _nombre)
+	{
+		ifstream archivo;
+		vector<CPaciente> vc1;
+		archivo.open(_nombre, ios::in);
+		string nombre, apellido, genero, edad, enfermedad,estado, aislamiento;
+	
+		if (archivo.is_open()) {
+			while (!archivo.eof())
+			{
+				getline(archivo, nombre,',' );
+				getline(archivo, apellido,',' );
+				getline(archivo, genero,',' );	
+				getline(archivo, edad,',' );
+				getline(archivo, enfermedad,',' );
+				getline(archivo, estado,',' );
+				getline(archivo, aislamiento);
+				CPaciente paciente = CPaciente(nombre, apellido,stoi(edad), genero, estado, enfermedad);
+				vc1.push_back(paciente);			
+			}
+		}
+		else
+			cout << "ERROR, FILES NOT FOUND" << endl;
+		archivo.close();
+		return vc1;
+	}
+
+
 };
 #endif

@@ -17,8 +17,10 @@ string genero;
 string enfermedad;
 string apellido;
 CCola* queue = new CCola();
-CLista* mayorRiesgo = new CLista();
-CLista* menorRiesgo = new CLista();
+CLista* mayorRiesgo = new CLista(); // a eliminar
+CLista* menorRiesgo = new CLista(); // a eliminar
+CLista* nuevaLista = new CLista(); // la mezcla
+
 
 auto Generar_estado = []()
 {
@@ -35,18 +37,38 @@ auto Generar_estado = []()
 	}
 };
 
-
-void Show_mayorriesgo()
+void Nueva_Lista()
 {
-	cout << "Pacientes en riesgo alto" << endl;
-	mayorRiesgo->Mostrar();
+	int cont = 1;
+	CPaciente aux = CPaciente(nombre, apellido, edad, genero, Generar_estado(), enfermedad);
+	
+
+	while (!queue->is_empty())
+	{
+		aux = queue->Front();
+		cout << " Paciente N " << cont << "\n " << aux.Mostrar_Informacion() << endl  << endl;
+		
+
+		queue->Pop();
+		cont++;
+	}
+
+
 }
 
-void Show_menorriesgo()
-{
-	cout << "Pacientes en riesgo bajo" << endl;
-	menorRiesgo->Mostrar();
-}
+
+
+/*void Show_mayorriesgo()
+//{
+//	cout << "Pacientes en riesgo alto" << endl;
+//	mayorRiesgo->Mostrar();
+//}
+//
+//void Show_menorriesgo()
+//{
+//	cout << "Pacientes en riesgo bajo" << endl;
+//	menorRiesgo->Mostrar();
+}*/
 
 void Add_Paciente()
 {
@@ -84,15 +106,15 @@ void Show_pacientes()
 			cout << " Paciente N " << cont << ". " << aux.Mostrar_Informacion() << endl << endl << endl;
 			if (aux.getEdad() >= 50)
 			{
-				mayorRiesgo->Agregar(aux);
+				nuevaLista->Agregar(aux);
 			}
 			else if (aux.getEdad() < 50 && aux.getEnfermedad() == "SI")
 			{
-				mayorRiesgo->Agregar(aux);
+				nuevaLista->Agregar(aux);
 			}
 			else
 			{
-				menorRiesgo->Agregar(aux);
+				nuevaLista->Agregar(aux);
 			}
 		}
 		queue->Pop();
@@ -146,7 +168,7 @@ int main()
 			break;
 		
 		case LISTAR:
-			int opc;
+			/*int opc;
 			cout << "Presione 1 para mostrar al GRUPO DE MAYOR RIESGO o 0 para mostrar al GRUPO DE MENOR RIESGO: ";
 			cin >> opc;
 			if (opc == 1)
@@ -171,22 +193,39 @@ int main()
 				{
 					Show_menorriesgo();
 				}
-			}
+			}*/
+
+
+			Nueva_Lista();
 			break;
 
 		case GUARDAR:
-			mayorRiesgo->Guardar();
-			menorRiesgo->Guardar();
+
+			nuevaLista->Guardar();
+			cout << "Se agrego correctamente ? ---" << endl << endl;
+
 			break;
 
 		case CARGAR:
-			/*string nombre;
-			cout << "Nombre del archivo '.cs'  :\n";
+			string nombre;
+			int n;
+			cout << "Nombre del archivo [nombre.txt]:\n";
 			cin >> nombre;
-			queue->Cargar(nombre);*/
+			cout << "N* de pasientes nuevos: \n";
+			cin >> n;
+			//queue->Push(nuevaLista->Cargar(nombre));
+			
+			
+
+			for (int i = 0; i < n ; i++)
+			{
+				queue->Push(nuevaLista->Cargar(nombre)[i]);
+			}
+
+			
 			break;
 		}
-		Menu();
+	Menu();
 	}
 	system("pause");
 	return 0;

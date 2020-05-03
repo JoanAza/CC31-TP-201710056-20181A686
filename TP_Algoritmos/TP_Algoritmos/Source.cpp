@@ -12,13 +12,14 @@
 int opcion;
 int status;
 int edad;
+int aislamiento = 21;
 string nombre;
 string genero;
 string enfermedad;
 string apellido;
 CCola* queue = new CCola();
-CLista* mayorRiesgo = new CLista(); // a eliminar
-CLista* menorRiesgo = new CLista(); // a eliminar
+//CLista* mayorRiesgo = new CLista(); // a eliminar
+//CLista* menorRiesgo = new CLista(); // a eliminar
 CLista* nuevaLista = new CLista(); // la mezcla
 
 
@@ -40,7 +41,7 @@ auto Generar_estado = []()
 void Nueva_Lista()
 {
 	int cont = 1;
-	CPaciente aux = CPaciente(nombre, apellido, edad, genero, Generar_estado(), enfermedad);
+	CPaciente aux = CPaciente(nombre, apellido, edad, genero, Generar_estado(), enfermedad, aislamiento);
 	
 
 	while (!queue->is_empty())
@@ -88,7 +89,7 @@ void Add_Paciente()
 		enfermedad[i] = toupper(enfermedad[i]);
 	}
 
-	CPaciente patient = CPaciente(nombre, apellido, edad, genero, Generar_estado(), enfermedad);
+	CPaciente patient = CPaciente(nombre, apellido, edad, genero, Generar_estado(), enfermedad, aislamiento);
 	queue->Push(patient);
 	
 	cout << " Paciente agregado correctamente!!!" << endl << endl;
@@ -97,25 +98,14 @@ void Add_Paciente()
 void Show_pacientes()
 {
 	int cont = 1;
-	CPaciente aux = CPaciente(nombre, apellido, edad, genero, Generar_estado(), enfermedad);
+	CPaciente aux = CPaciente(nombre, apellido, edad, genero, Generar_estado(), enfermedad, aislamiento);
 	while (!queue->is_empty())
 	{
 		aux = queue->Front();
 		if (aux.getEstado() == "Positivo")
 		{
 			cout << " Paciente N " << cont << ". " << aux.Mostrar_Informacion() << endl << endl << endl;
-			if (aux.getEdad() >= 50)
-			{
-				nuevaLista->Agregar(aux);
-			}
-			else if (aux.getEdad() < 50 && aux.getEnfermedad() == "SI")
-			{
-				nuevaLista->Agregar(aux);
-			}
-			else
-			{
-				nuevaLista->Agregar(aux);
-			}
+			nuevaLista->Agregar(aux);
 		}
 		queue->Pop();
 		cont++;
@@ -130,7 +120,7 @@ void Menu()
 	cout << " *                                                                   *" << endl;
 	cout << " *   1. Agregar nuevo paciente a la cola de espera                   *" << endl;
 	cout << " *   2. Mostrar a los pacientes que dieron positivo para COVID-19    *" << endl;
-	cout << " *   3. Listar a los pacientes por grupo de riesgo                   *" << endl;
+	cout << " *   3. Mostrar datos Cargardos					                  *" << endl;
 	cout << " *   4. Guardar Informacion                                          *" << endl;
 	cout << " *   5. Cargar Informacion                                           *" << endl;
 	cout << " *   6. SALIR                                                        *" << endl;
@@ -165,6 +155,8 @@ int main()
 		case MOSTRAR:
 
 			Show_pacientes();
+			system("pause>0");
+			system("cls");
 			break;
 		
 		case LISTAR:
@@ -197,6 +189,8 @@ int main()
 
 
 			Nueva_Lista();
+			system("pause>0");
+			system("cls");
 			break;
 
 		case GUARDAR:
@@ -222,7 +216,8 @@ int main()
 				queue->Push(nuevaLista->Cargar(nombre)[i]);
 			}
 
-			
+			system("pause>0");
+			system("cls");
 			break;
 		}
 	Menu();

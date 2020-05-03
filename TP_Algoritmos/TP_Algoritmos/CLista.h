@@ -93,9 +93,9 @@ public:
 		archivo.open("archivo.txt");
 		for(int i = 0; i < len ; ++i)
 		{
-			archivo << aux->elem.getNombre() << "," << aux->elem.getApellido() << "," << aux->elem.getGenero() << ","
-				<< aux->elem.getEdad() << "," << aux->elem.getEnfermedad() << "," << aux->elem.getEstado() << ","
-				<< aux->elem.getAislamiento();
+			archivo << aux->elem.getNombre() << "," << aux->elem.getApellido()	<< "," << aux->elem.getGenero() << ","
+					<< aux->elem.getEdad()	 << "," << aux->elem.getEnfermedad()<< "," << aux->elem.getEstado() << ","
+					<< aux->elem.getAislamiento();
 			archivo << endl;
 			aux = aux->next;
 		}
@@ -121,7 +121,7 @@ public:
 				getline(archivo, enfermedad,',' );
 				getline(archivo, estado,',' );
 				getline(archivo, aislamiento);
-				CPaciente paciente = CPaciente(nombre, apellido,stoi(edad), genero, estado, enfermedad);
+				CPaciente paciente = CPaciente(nombre, apellido,stoi(edad), genero, estado, enfermedad,stoi(aislamiento));
 				vc1.push_back(paciente);			
 			}
 		}

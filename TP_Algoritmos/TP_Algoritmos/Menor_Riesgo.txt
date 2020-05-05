@@ -1,0 +1,7 @@
+John,Lopez,Masculino,38,NO,Positivo
+Pedro,Vargas,Masculino,25,NO,Positivo
+Flor,Gomez,Femenino,12,NO,Positivo
+Daniel,Cruz,Masculino,46,NO,Positivo
+Milagros,Ruiz,Femenino,25,NO,Positivo
+Rosa,Mendoza,Femenino,55,NO,Positivo
+Diego,Cordova,Masculino,30,NO,Positivo

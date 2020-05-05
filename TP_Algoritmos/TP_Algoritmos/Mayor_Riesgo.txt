@@ -1,0 +1,7 @@
+Carlos,Alvarez,Masculino,5,SI,Positivo
+Maria,Flores,Femenino,55,SI,Positivo
+Juan,Quispe,Masculino,11,SI,Positivo
+Jose,Rodriguez,Masculino,60,NO,Positivo
+Cristina,Rojas,Femenino,25,SI,Positivo
+Martin,Garcia,Masculino,76,SI,Positivo
+Manuel,Espinoza,Masculino,90,NO,Positivo

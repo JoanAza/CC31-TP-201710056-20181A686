@@ -3,12 +3,12 @@
 #include "CPaciente.h"
 
 
-//template <typename T>
+template <typename T>
 class CCola
 {
 	struct Node
 	{
-		CPaciente elem;
+		T elem;
 		Node* next;
 
 		Node(CPaciente elem, Node* n = nullptr) : elem(elem), next(n) {}
@@ -35,7 +35,8 @@ public:
 		return len == 0;
 	}
 
-	void Push(CPaciente elem)
+	template<typename T>
+	T Push(CPaciente elem)
 	{
 		if (++len == 1)
 		{
@@ -48,6 +49,7 @@ public:
 			fin = fin->next;
 		}
 	}
+
 
 	bool Pop()
 	{
@@ -62,17 +64,18 @@ public:
 		return false;
 	}
 
-	int Size() { return len; }
+	int Size() 
+	{ 
+		return len; 
+	}
 
-	CPaciente Front()
+	template <typename T>
+	T Front()
 	{
 		if (len > 0)
 		{
 			return ini->elem;
 		}
 	}
-
-
 };
-
 #endif

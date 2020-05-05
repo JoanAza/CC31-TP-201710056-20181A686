@@ -1,4 +1,5 @@
-#include <stdlib.h>
+//#include <stdlib.h>
+#include <conio.h>
 #include "CCola.h"
 #include "CLista.h"
 
@@ -9,18 +10,21 @@
 #define CARGAR 5
 #define SALIR 6
 
-int opcion;
+int opcionMenu;
 int status;
 int edad;
-int aislamiento = 21;
 string nombre;
 string genero;
 string enfermedad;
 string apellido;
-CCola* queue = new CCola();
-//CLista* mayorRiesgo = new CLista(); // a eliminar
-//CLista* menorRiesgo = new CLista(); // a eliminar
-CLista* nuevaLista = new CLista(); // la mezcla
+string estado;
+string archivo1 = "Mayor_Riesgo.txt";
+string archivo2 = "Menor_Riesgo.txt";
+string eliminarApellido;
+CCola<CPaciente>* queue = new CCola<CPaciente>();
+CLista<CPaciente>* mayorRiesgo = new CLista<CPaciente>();
+CLista<CPaciente>* menorRiesgo = new CLista<CPaciente>();
+
 
 
 auto Generar_estado = []()
@@ -38,38 +42,17 @@ auto Generar_estado = []()
 	}
 };
 
-void Nueva_Lista()
+void Show_mayorriesgo()
 {
-	int cont = 1;
-	CPaciente aux = CPaciente(nombre, apellido, edad, genero, Generar_estado(), enfermedad, aislamiento);
-	
-
-	while (!queue->is_empty())
-	{
-		aux = queue->Front();
-		cout << " Paciente N " << cont << "\n " << aux.Mostrar_Informacion() << endl  << endl;
-		
-
-		queue->Pop();
-		cont++;
-	}
-
-
+	cout << "Pacientes en riesgo alto" << endl;
+	mayorRiesgo->Mostrar<void>();
 }
 
-
-
-/*void Show_mayorriesgo()
-//{
-//	cout << "Pacientes en riesgo alto" << endl;
-//	mayorRiesgo->Mostrar();
-//}
-//
-//void Show_menorriesgo()
-//{
-//	cout << "Pacientes en riesgo bajo" << endl;
-//	menorRiesgo->Mostrar();
-}*/
+void Show_menorriesgo()
+{
+	cout << "Pacientes en riesgo bajo" << endl;
+	menorRiesgo->Mostrar<void>();
+}
 
 void Add_Paciente()
 {
@@ -89,8 +72,8 @@ void Add_Paciente()
 		enfermedad[i] = toupper(enfermedad[i]);
 	}
 
-	CPaciente patient = CPaciente(nombre, apellido, edad, genero, Generar_estado(), enfermedad, aislamiento);
-	queue->Push(patient);
+	CPaciente patient = CPaciente(nombre, apellido, edad, genero, Generar_estado(), enfermedad);
+	queue->Push<void>(patient);
 	
 	cout << " Paciente agregado correctamente!!!" << endl << endl;
 }
@@ -98,14 +81,25 @@ void Add_Paciente()
 void Show_pacientes()
 {
 	int cont = 1;
-	CPaciente aux = CPaciente(nombre, apellido, edad, genero, Generar_estado(), enfermedad, aislamiento);
+	CPaciente aux = CPaciente(nombre, apellido, edad, genero, Generar_estado(), enfermedad);
 	while (!queue->is_empty())
 	{
-		aux = queue->Front();
+		aux = queue->Front<CPaciente>();
 		if (aux.getEstado() == "Positivo")
 		{
 			cout << " Paciente N " << cont << ". " << aux.Mostrar_Informacion() << endl << endl << endl;
-			nuevaLista->Agregar(aux);
+			if (aux.getEdad() >= 60)
+			{
+				mayorRiesgo->Agregar<void>(aux);
+			}
+			else if (aux.getEdad() < 60 && aux.getEnfermedad() == "SI")
+			{
+				mayorRiesgo->Agregar<void>(aux);
+			}
+			else
+			{
+				menorRiesgo->Agregar<void>(aux);
+			}
 		}
 		queue->Pop();
 		cont++;
@@ -120,14 +114,14 @@ void Menu()
 	cout << " *                                                                   *" << endl;
 	cout << " *   1. Agregar nuevo paciente a la cola de espera                   *" << endl;
 	cout << " *   2. Mostrar a los pacientes que dieron positivo para COVID-19    *" << endl;
-	cout << " *   3. Mostrar datos Cargardos					                  *" << endl;
+	cout << " *   3. Listar a los pacientes por grupo de riesgo                   *" << endl;
 	cout << " *   4. Guardar Informacion                                          *" << endl;
 	cout << " *   5. Cargar Informacion                                           *" << endl;
 	cout << " *   6. SALIR                                                        *" << endl;
 	cout << " *                                                                   *" << endl;
 	cout << " * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *" << endl << endl;
 	cout << " Ingrese una opcion: ";
-	cin >> opcion;
+	cin >> opcionMenu;
 	system("cls");
 }
 
@@ -135,9 +129,9 @@ int main()
 {
 	Menu();
 
-	while (opcion != 6)
+	while (opcionMenu != 6)
 	{
-		switch (opcion)
+		switch (opcionMenu)
 		{
 		case AGREGAR:
 			char op;
@@ -155,23 +149,39 @@ int main()
 		case MOSTRAR:
 
 			Show_pacientes();
-			system("pause>0");
+			cout << "\n Presione una tecla para volver al menu principal...";
+			_getch();
 			system("cls");
 			break;
 		
 		case LISTAR:
-			/*int opc;
-			cout << "Presione 1 para mostrar al GRUPO DE MAYOR RIESGO o 0 para mostrar al GRUPO DE MENOR RIESGO: ";
+			int opc;
+			char opcionEliminar;
+			cout << " Presione 1 para mostrar al GRUPO DE MAYOR RIESGO o 0 para mostrar al GRUPO DE MENOR RIESGO: ";
 			cin >> opc;
 			if (opc == 1)
 			{	
 				if (mayorRiesgo->is_empty())
 				{
-					cout << "No existen pacientes con riesgo alto";
+					cout << " No existen pacientes con riesgo alto" << endl << endl;
+					cout << "\n Presione una tecla para volver al menu principal...";
+					_getch();
 				}
 				else
 				{
 					Show_mayorriesgo();
+					cout << "\n Desea eliminar a un paciente de la lista ? (S para SI : N para NO): ";
+					cin >> opcionEliminar;
+					opcionEliminar = toupper(opcionEliminar);
+					if (opcionEliminar == 'S')
+					{
+						cout << " Ingrese el apellido del paciente que desea eliminar de la lista: ";
+						cin >> eliminarApellido;
+						mayorRiesgo->Eliminar<bool>(eliminarApellido);
+						cout << " Paciente removido correctamente!!!";
+					}
+					cout << "\n Presione una tecla para volver al menu principal...";
+					_getch();
 				}
 			}
 			else
@@ -179,44 +189,75 @@ int main()
 				
 				if (menorRiesgo->is_empty())
 				{
-					cout << "No existen pacientes con riesgo bajo";
+					cout << " No existen pacientes con riesgo bajo" << endl << endl;
+					cout << "\n Presione una tecla para volver al menu principal...";
+					_getch();
 				}
 				else
 				{
 					Show_menorriesgo();
+					cout << "\n Desea eliminar a un paciente de la lista ? (S para SI : N para NO): ";
+					cin >> opcionEliminar;
+					opcionEliminar = toupper(opcionEliminar);
+					if (opcionEliminar == 'S')
+					{
+						cout << " Ingrese el apellido del paciente que desea eliminar de la lista: ";
+						cin >> eliminarApellido;
+						menorRiesgo->Eliminar<bool>(eliminarApellido);
+						cout << " Paciente removido correctamente!!!";
+					}
+					cout << "\n Presione una tecla para volver al menu principal...";
+					_getch();
 				}
-			}*/
-
-
-			Nueva_Lista();
-			system("pause>0");
+			}
 			system("cls");
 			break;
 
 		case GUARDAR:
 
-			nuevaLista->Guardar();
-			cout << "Se agrego correctamente ? ---" << endl << endl;
-
+			menorRiesgo->Guardar<void>(archivo2);
+			mayorRiesgo->Guardar<void>(archivo1);
+			cout << " Se guardo la lista de pacientes en un archivo correctamente!!!" << endl << endl;
+			cout << "\n Presione una tecla para volver al menu principal...";
+			_getch();
+			system("cls");
 			break;
 
 		case CARGAR:
-			string nombre;
+			int opcion;
 			int n;
-			cout << "Nombre del archivo [nombre.txt]:\n";
-			cin >> nombre;
-			cout << "N* de pasientes nuevos: \n";
+			string nombreArchivo;
+			CPaciente aux = CPaciente(nombre, apellido, edad, genero, estado, enfermedad);
+			CLista<CPaciente>* aux1 = new CLista<CPaciente>();
+
+			cout << " 1. Abrir archivo de los pacientes de MENOR RIESGO\n";
+			cout << " 2. Abrir archivo de los pacientes de MAYOR RIESGO\n";
+			cout << "Ingrese una opcion: ";
+			cin >> opcion;
+
+			cout << "N* de pacientes en el archivo: ";
 			cin >> n;
 			//queue->Push(nuevaLista->Cargar(nombre));
-			
-			
 
-			for (int i = 0; i < n ; i++)
+			if (opcion == 1)
 			{
-				queue->Push(nuevaLista->Cargar(nombre)[i]);
+				nombreArchivo = "Menor_Riesgo.txt";
+				for (int i = 0; i < n; i++)
+				{
+					aux1->Agregar<void>(menorRiesgo->Cargar(nombreArchivo)[i]);
+				}
 			}
-
-			system("pause>0");
+			else
+			{
+				nombreArchivo = "Mayor_Riesgo.txt";
+				for (int i = 0; i < n; i++)
+				{
+					aux1->Agregar<void>(mayorRiesgo->Cargar(nombreArchivo)[i]);
+				}
+			}
+			aux1->Mostrar<void>();
+			cout << "\n\n Presione una tecla para volver al menu principal...";
+			_getch();
 			system("cls");
 			break;
 		}

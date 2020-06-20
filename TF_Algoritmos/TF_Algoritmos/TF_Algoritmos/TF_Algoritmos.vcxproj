@@ -126,6 +126,7 @@
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AVL.h" />
     <ClInclude Include="CColumna.h" />
     <ClInclude Include="CFila.h" />
     <ClInclude Include="colFloat.h" />

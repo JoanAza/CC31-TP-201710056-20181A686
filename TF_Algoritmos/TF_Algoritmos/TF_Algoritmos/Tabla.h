@@ -1,12 +1,11 @@
 #pragma once
 #include "AVL.h"
 #include "CFila.h"
-#include "CColumna.h"
+#include <vector>
 
 class CTabla {
 private:
 	vector<CFila>* filas;
-	vector<CColumna>* columna;
 	int nCol;
 
 public:

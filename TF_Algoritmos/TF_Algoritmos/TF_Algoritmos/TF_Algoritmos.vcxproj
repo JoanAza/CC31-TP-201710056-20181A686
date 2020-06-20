@@ -127,11 +127,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AVL.h" />
-    <ClInclude Include="CColumna.h" />
     <ClInclude Include="CFila.h" />
-    <ClInclude Include="colFloat.h" />
-    <ClInclude Include="colInt.h" />
-    <ClInclude Include="colString.h" />
     <ClInclude Include="Tabla.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

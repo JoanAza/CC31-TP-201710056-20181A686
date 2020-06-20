@@ -2,24 +2,28 @@
 using namespace std;
 
 
-void menu() {
-	system("cls");
-	cout << "(1) Creacion de Tablas" << endl
-		<< "(2) Insercion de Columnas" << endl
-		<< "(3) Insercion de Registro" << endl
-		<< "(4) Indexado de Datos por Columnas" << endl
-		<< "(5) Seleccion de Datos por Columnas" << endl
-		<< "(6) Ordenamiento de Datos por Columnas" << endl
-		<< "(7) Exportacion de Datos por Columnas" << endl
-		<< "(8) Mostrar Tabla" << endl
-		<< "(0) Salir" << endl
-		<< "Elige una opcion: "; 
+void menu() 
+{
+	cout << " * * * * * * * * * * * * * * * * * * * * * * * * * * * *" << endl;
+	cout << " *                                                     *" << endl;
+	cout << " *                       MENU                          *" << endl;
+	cout << " *                                                     *" << endl;
+	cout << " *        1. Agregar datos a las tablas                *" << endl;
+	cout << " *        2. Indexar datos                             *" << endl;
+	cout << " *        3. Seleccionar datos                         *" << endl;
+	cout << " *        4. Filtrar datos                             *" << endl;
+	cout << " *        5. Ordenar datos                             *" << endl;
+	cout << " *        6. Exportar datos a un archivo plano         *" << endl;
+	cout << " *        7. SALIR                                     *" << endl;
+	cout << " *                                                     *" << endl;
+	cout << " * * * * * * * * * * * * * * * * * * * * * * * * * * * *" << endl;
 }
 
 
 
-int main() {
+int main() 
+{
 
-	system("pause>0");
+	system("pause");
 	return 0;
 }
